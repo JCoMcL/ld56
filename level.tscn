@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cjknd176i4hwb"]
+
+[ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
+
+[node name="Level" type="Node2D"]
+y_sort_enabled = true
+
+[node name="GourtPile" parent="." instance=ExtResource("1_mecn1")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(2, -213)

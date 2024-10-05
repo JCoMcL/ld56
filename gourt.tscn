@@ -1,0 +1,85 @@
+[gd_scene load_steps=11 format=3 uid="uid://rrbi80s32t3u"]
+
+[ext_resource type="Texture2D" uid="uid://bguomvmmj6gbr" path="res://gourts/gourt0000.png" id="1_w81eu"]
+[ext_resource type="Texture2D" uid="uid://cyeletaecyakg" path="res://gourts/gourt0001.png" id="2_n3nlc"]
+[ext_resource type="Texture2D" uid="uid://bft76q276ink2" path="res://gourts/gourt0002.png" id="3_qsy1a"]
+[ext_resource type="Texture2D" uid="uid://c5k7gpwh2vh0b" path="res://gourts/gourt0003.png" id="4_yqmv3"]
+[ext_resource type="Texture2D" uid="uid://bjsx0l57gxy28" path="res://gourts/gourt0004.png" id="5_c7k88"]
+[ext_resource type="Texture2D" uid="uid://8ygv7cy0f87g" path="res://gourts/gourt0005.png" id="6_ogpii"]
+[ext_resource type="Texture2D" uid="uid://bsphh11xwqce2" path="res://gourts/gourt.png" id="7_31ejp"]
+[ext_resource type="Script" path="res://gourty code.gd" id="8_rkds3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_n26on"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_w81eu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_31ejp")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_c7k88")
+}],
+"loop": false,
+"name": &"poke down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_qsy1a")
+}],
+"loop": false,
+"name": &"poke up",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_ogpii")
+}],
+"loop": false,
+"name": &"poked down",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_yqmv3")
+}],
+"loop": false,
+"name": &"poked up",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_n3nlc")
+}],
+"loop": true,
+"name": &"sleep",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g4wwk"]
+size = Vector2(168, 102)
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D"]
+sprite_frames = SubResource("SpriteFrames_n26on")
+animation = &"idle"
+script = ExtResource("8_rkds3")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="Sleepytime" type="Timer" parent="."]
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+y_sort_enabled = true
+position = Vector2(-3, -9)
+shape = SubResource("RectangleShape2D_g4wwk")
+
+[connection signal="input_event" from="Area2D" to="." method="on_input"]

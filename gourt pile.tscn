@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxya8sad0of8x"]
+
+[ext_resource type="Script" path="res://gourt_pile.gd" id="1_o6drr"]
+
+[node name="GourtPile" type="Node2D"]
+y_sort_enabled = true
+script = ExtResource("1_o6drr")
