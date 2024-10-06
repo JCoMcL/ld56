@@ -35,7 +35,8 @@ go_right={
 
 [layer_names]
 
-2d_physics/layer_2="hat"
+2d_physics/layer_1="guort"
+2d_physics/layer_2="environment"
 
 [rendering]
 

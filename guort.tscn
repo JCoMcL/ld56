@@ -1,4 +1,4 @@
-[gd_scene load_steps=93 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=94 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -89,6 +89,7 @@
 [ext_resource type="Texture2D" uid="uid://bcr8h3e16e6xh" path="res://gourts/faces/face0027.png" id="79_lx16j"]
 [ext_resource type="Texture2D" uid="uid://iri2qcnrqg18" path="res://gourts/faces/face0028.png" id="80_3hv3k"]
 [ext_resource type="Texture2D" uid="uid://ovkailsr7bks" path="res://gourts/faces/face0029.png" id="81_nc8ok"]
+[ext_resource type="Script" path="res://socket.gd" id="90_nr5he"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
 radius = 39.0
@@ -505,12 +506,10 @@ animations = [{
 }]
 
 [node name="Guort" type="CharacterBody2D"]
-collision_layer = 7
-collision_mask = 7
+collision_mask = 2
 input_pickable = true
 slide_on_ceiling = false
-platform_floor_layers = 4294967047
-platform_wall_layers = 6
+platform_floor_layers = 4294967294
 script = ExtResource("1_mqv0r")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
@@ -522,7 +521,8 @@ shape = SubResource("CapsuleShape2D_ra35n")
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
 animation = &"transportative"
-frame_progress = 0.338104
+frame = 1
+frame_progress = 0.802905
 script = ExtResource("13_esvsc")
 idle_animations = Array[StringName]([&"furtive", &"pensive"])
 
@@ -532,3 +532,8 @@ sprite_frames = SubResource("SpriteFrames_matdj")
 animation = &"aboundless"
 frame_progress = 0.853041
 script = ExtResource("13_esvsc")
+
+[node name="Socket" type="Node2D" parent="."]
+position = Vector2(-9, -70)
+script = ExtResource("90_nr5he")
+speed = 5.8

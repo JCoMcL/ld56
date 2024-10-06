@@ -17,7 +17,7 @@ position = Vector2(2, -213)
 [node name="floor" type="StaticBody2D" parent="."]
 z_index = -2
 position = Vector2(2, 81)
-collision_layer = 4
+collision_layer = 2
 
 [node name="ColorRect" type="ColorRect" parent="floor"]
 offset_left = -408.0
