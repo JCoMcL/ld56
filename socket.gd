@@ -35,7 +35,6 @@ func flip_socket_of_attached():
 	var child = try_get_child()
 	if child:
 		child.flip_socket()
-	
 
 func _process(delta: float) -> void:
 	if position.x != target_x:

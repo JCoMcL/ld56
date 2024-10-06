@@ -1,6 +1,7 @@
 extends Area2D
 
 @export var enabled: bool = true
+@export var debug: bool = false
 
 signal nearby_click(target: Vector2)
 
@@ -18,7 +19,8 @@ func _ready():
 		enable()
 	else:
 		inhibit()
-	nearby_click.connect(debug_msg)
+	if debug:
+		nearby_click.connect(debug_msg)
 
 func debug_msg(target: Vector2):
 	get_parent().identify("Targeting {0}".format([target]))

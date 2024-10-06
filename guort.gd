@@ -17,11 +17,30 @@ func attach(gourt: Node):
 		$Socket.add_child(gourt)
 		up_neighbour = gourt
 		gourt.down_neighbour = self
-	
+
+
+func set_timer(timer, avg_time, callback):
+	var time = randi_range(0,avg_time) + randi_range(0,avg_time)
+	timer.one_shot = true
+	if not timer.timeout.is_connected(callback):
+		timer.timeout.connect(callback)
+	timer.start(time)
+
+func bump_patience():
+	if $Patience.time_left:
+		$Patience.start($Patience.time_left + 1)
+	else:
+		set_timer($Patience, 15, on_patience_expired)
+
+func on_patience_expired():
+	sleep()
+
 func _ready() -> void:
 	landed.connect(on_stop)
 	stopped.connect(on_stop)
 	$ClickDetector.nearby_click.connect(on_nearby_click)
+	$Body.animation_finished.connect(on_animation_end)
+	set_timer($Patience, 15, sleep)
 	identify()
 
 func set_facing(direction: int):
@@ -59,6 +78,13 @@ func track_if_landed():
 func on_stop():
 	idle()
 
+func nothing():
+	pass
+var do_on_animation_end = nothing
+func on_animation_end():
+	do_on_animation_end.call()
+	do_on_animation_end = nothing
+	
 func idle(new_idle=false):
 	$Body.idle(new_idle)
 	
@@ -67,7 +93,7 @@ func bottom_behaviour(delta: float) -> void:
 		velocity += get_gravity() * delta
 		$Body.play("restive")
 
-	var target = Input.get_axis("go_left","go_right") * 200
+	var target = Input.get_axis("go_left","go_right") * 200 if input_enabled else 0
 	if not down_neighbour:
 		velocity.x = move_toward(velocity.x, target, 20)
 		if not velocity.x == 0:
@@ -78,25 +104,42 @@ func bottom_behaviour(delta: float) -> void:
 	move_and_slide()
 
 func on_nearby_click(where: Vector2):
-	if where.y < 0:
-		poke_up()
+	if input_enabled:
+		if where.y < 0:
+			poke_up()
+		else:
+			poke_down()
 	else:
-		poke_down()
+		identify("input disabled")
 
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
 		bottom_behaviour(delta)
 
+var input_enabled = true
+func disable_input():
+	input_enabled = false
+func enable_input():
+	input_enabled = true
+func disable_input_for_animation():
+	disable_input()
+	do_on_animation_end = enable_input
 # Behaviours
 func sleep():
-	$Body.play("restive")
+	$Body.play(["palliative", "restive"].pick_random())
 	$Body/Face.play("sleep")
+	disable_input_for_animation()
 	sleeping = true
 	$ClickDetector.inhibit()
+	$Socket.position.y = -60
+	$SleepyParticles.emitting = true
+	$SleepySFX.play()
 func wakeup():
 	sleeping = false
 	$ClickDetector.enable()
-	idle()
+	$Socket.position.y = -88
+	$SleepyParticles.emitting  = false
+	$SleepySFX.stop()
 func poke_up():
 	$Body.play_exclusive("poke_up")
 	up_neighbour.poked()
@@ -104,6 +147,9 @@ func poke_down():
 	$Body.play_exclusive("poke_down")
 	down_neighbour.poked()
 func poked():
+	bump_patience()
+	wakeup()
+	disable_input_for_animation()
 	$Body.play_exclusive(["shock_0", "shock_1", "shock_2"].pick_random())
 	$Body.pick_new_idle()
 		

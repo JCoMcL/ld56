@@ -7,7 +7,7 @@ func _ready() -> void:
 	var child = gourt.instantiate()
 	add_child(child)
 	child.label = "Bottom Guort"
-	for i in range(7):
+	for i in range(6):
 		var next = gourt.instantiate() 
 		next.set_facing(randi_range(0, 1))
 		next.label = "Gourt no. {0}".format([i])

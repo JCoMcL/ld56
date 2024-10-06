@@ -1,10 +1,13 @@
-[gd_scene load_steps=114 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=118 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
 [ext_resource type="Texture2D" uid="uid://7iw5f25abp15" path="res://gourts/bodies/body0010.png" id="2_ji4bc"]
+[ext_resource type="AudioStream" uid="uid://dmikl31oxrbxo" path="res://sound/snore_0.ogg" id="2_lxyxg"]
 [ext_resource type="Texture2D" uid="uid://ds2eyojnihhrm" path="res://gourts/bodies/body0021.png" id="2_urk3u"]
+[ext_resource type="Texture2D" uid="uid://dk3gdybdrg8hs" path="res://z.png" id="2_v5acg"]
 [ext_resource type="Texture2D" uid="uid://7wd6ylrxh1yw" path="res://gourts/bodies/body0011.png" id="3_6kvb0"]
+[ext_resource type="Script" path="res://sleepy_sfx.gd" id="3_doxa6"]
 [ext_resource type="Texture2D" uid="uid://psmv42jexmtg" path="res://gourts/bodies/body0022.png" id="3_mktpe"]
 [ext_resource type="Texture2D" uid="uid://c5xy6xfx12a3w" path="res://gourts/bodies/body0023.png" id="4_ces04"]
 [ext_resource type="Texture2D" uid="uid://cpe46osifyis2" path="res://gourts/bodies/body0000.png" id="4_y53ac"]
@@ -110,6 +113,10 @@
 [ext_resource type="Script" path="res://socket.gd" id="90_nr5he"]
 [ext_resource type="Script" path="res://click_detector.gd" id="103_286mj"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d1io"]
+atlas = ExtResource("2_v5acg")
+region = Rect2(0, 0, 64, 64)
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7rkiu"]
 animations = [{
 "frames": [{
@@ -204,7 +211,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shock_0",
-"speed": 16.0
+"speed": 20.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -212,7 +219,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shock_1",
-"speed": 10.0
+"speed": 16.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -220,7 +227,7 @@ animations = [{
 }],
 "loop": false,
 "name": &"shock_2",
-"speed": 8.0
+"speed": 12.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -639,17 +646,40 @@ slide_on_ceiling = false
 platform_floor_layers = 4294967294
 script = ExtResource("1_mqv0r")
 
+[node name="Patience" type="Timer" parent="."]
+
+[node name="SleepySFX" type="AudioStreamPlayer2D" parent="."]
+position = Vector2(46, -15)
+stream = ExtResource("2_lxyxg")
+parameters/looping = true
+script = ExtResource("3_doxa6")
+
+[node name="SleepyParticles" type="CPUParticles2D" parent="."]
+z_index = 2
+position = Vector2(46, -15)
+emitting = false
+amount = 4
+lifetime = 5.0
+randomness = 0.45
+lifetime_randomness = 0.14
+texture = SubResource("AtlasTexture_5d1io")
+direction = Vector2(1.5, -1)
+spread = 10.72
+gravity = Vector2(0, 0)
+initial_velocity_min = 40.0
+initial_velocity_max = 50.1
+
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"poke_down"
+animation = &"palliative"
 script = ExtResource("26_olj8s")
 idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
-animation = &"listless"
-frame_progress = 0.08544
+animation = &"sleep"
+frame_progress = 0.391198
 script = ExtResource("13_esvsc")
 reserved_animations = Array[StringName]([&"sleep"])
 
