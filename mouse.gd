@@ -19,8 +19,10 @@ func _input(event: InputEvent) -> void:
 			return
 		
 		collision_objects.sort_custom(compare_distance)
-		var target = collision_objects.pop_front().collider.get_parent()
-		for c in collision_objects:
-			if c.collider.input_pickable:
-				c.collider.on_nearby_click.emit(target)
+
+		collision_objects.pop_front()
+		for col_obj in collision_objects:
+			var c = col_obj.collider
+			if c.input_pickable:
+				c.nearby_click.emit(c.to_local(query.position))
 				return

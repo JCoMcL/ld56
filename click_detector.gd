@@ -1,14 +1,24 @@
 extends Area2D
 
-signal on_nearby_click(target: CharacterBody2D)
+@export var enabled: bool = true
+
+signal nearby_click(target: Vector2)
 
 func inhibit():
+	#collision_layer = 0
 	input_pickable = false
+	enabled = false
 func enable():
-	input_pickable = true
-func _ready():
 	collision_layer = 4
-	on_nearby_click.connect(debug_msg)
+	input_pickable = true
+	enabled = true
+	
+func _ready():
+	if enabled:
+		enable()
+	else:
+		inhibit()
+	nearby_click.connect(debug_msg)
 
-func debug_msg(target: CharacterBody2D):
-	get_parent().identify("Targeting {0}".format([target.label]))
+func debug_msg(target: Vector2):
+	get_parent().identify("Targeting {0}".format([target]))

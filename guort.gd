@@ -21,6 +21,7 @@ func attach(gourt: Node):
 func _ready() -> void:
 	landed.connect(on_stop)
 	stopped.connect(on_stop)
+	$ClickDetector.nearby_click.connect(on_nearby_click)
 	identify()
 
 func set_facing(direction: int):
@@ -60,8 +61,6 @@ func on_stop():
 
 func idle(new_idle=false):
 	$Body.idle(new_idle)
-	$Body/Face.idle(new_idle)
-	
 	
 func bottom_behaviour(delta: float) -> void:
 	if not is_on_floor():
@@ -78,13 +77,19 @@ func bottom_behaviour(delta: float) -> void:
 	track_if_landed()
 	move_and_slide()
 
+func on_nearby_click(where: Vector2):
+	if where.y < 0:
+		poke_up()
+	else:
+		poke_down()
+
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
 		bottom_behaviour(delta)
 
 # Behaviours
 func sleep():
-	$Body.play("palliative")
+	$Body.play("restive")
 	$Body/Face.play("sleep")
 	sleeping = true
 	$ClickDetector.inhibit()
@@ -92,4 +97,13 @@ func wakeup():
 	sleeping = false
 	$ClickDetector.enable()
 	idle()
+func poke_up():
+	$Body.play_exclusive("poke_up")
+	up_neighbour.poked()
+func poke_down():
+	$Body.play_exclusive("poke_down")
+	down_neighbour.poked()
+func poked():
+	$Body.play_exclusive(["shock_0", "shock_1", "shock_2"].pick_random())
+	$Body.pick_new_idle()
 		

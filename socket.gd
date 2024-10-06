@@ -20,13 +20,19 @@ func _ready() -> void:
 	start_flip.connect(flip_socket_of_attached)
 
 
+func try_get_child():
+	if get_child_count():
+		return get_child(0)
+	else:
+		return null
+		
 func flip_attached():
-	var child = get_child(0)
+	var child = try_get_child()
 	if child:
 		child.flip_self()
 
 func flip_socket_of_attached():
-	var child = get_child(0)
+	var child = try_get_child()
 	if child:
 		child.flip_socket()
 	
