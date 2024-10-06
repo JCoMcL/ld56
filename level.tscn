@@ -1,11 +1,31 @@
-[gd_scene load_steps=2 format=3 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=3 format=3 uid="uid://cjknd176i4hwb"]
 
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnylh"]
+size = Vector2(817, 120)
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
 
 [node name="GourtPile" parent="." instance=ExtResource("1_mecn1")]
+position = Vector2(-1, -91)
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position = Vector2(2, -213)
+
+[node name="floor" type="StaticBody2D" parent="."]
+z_index = -2
+position = Vector2(2, 81)
+collision_layer = 4
+
+[node name="ColorRect" type="ColorRect" parent="floor"]
+offset_left = -408.0
+offset_top = 1.0
+offset_right = 410.0
+offset_bottom = 121.0
+color = Color(0.252981, 0.240769, 0.34455, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
+position = Vector2(-1.5, 62)
+shape = SubResource("RectangleShape2D_wnylh")

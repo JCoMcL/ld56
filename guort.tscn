@@ -1,5 +1,6 @@
-[gd_scene load_steps=85 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=93 format=3 uid="uid://crtcijpbdoi0y"]
 
+[ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
 [ext_resource type="Texture2D" uid="uid://7iw5f25abp15" path="res://gourts/bodies/body0010.png" id="2_ji4bc"]
 [ext_resource type="Texture2D" uid="uid://7wd6ylrxh1yw" path="res://gourts/bodies/body0011.png" id="3_6kvb0"]
@@ -15,11 +16,17 @@
 [ext_resource type="Texture2D" uid="uid://bmmfcrdtu6r2n" path="res://gourts/faces/face0063.png" id="13_24oif"]
 [ext_resource type="Script" path="res://animationSwitcher.gd" id="13_esvsc"]
 [ext_resource type="Texture2D" uid="uid://d3hqnj5uy2xr3" path="res://gourts/faces/face0064.png" id="14_c8prt"]
+[ext_resource type="Texture2D" uid="uid://dlkj78s86n8" path="res://gourts/bodies/body0012.png" id="14_dml2x"]
+[ext_resource type="Texture2D" uid="uid://dy6me5hs523se" path="res://gourts/bodies/body0013.png" id="15_u1wb2"]
 [ext_resource type="Texture2D" uid="uid://dgwxer437hiep" path="res://gourts/faces/face0065.png" id="15_v4in6"]
+[ext_resource type="Texture2D" uid="uid://c4xa8cnumb7jm" path="res://gourts/bodies/body0014.png" id="16_6ee4t"]
 [ext_resource type="Texture2D" uid="uid://cyef3ki0omjp8" path="res://gourts/faces/face0040.png" id="16_kon5m"]
+[ext_resource type="Texture2D" uid="uid://bplwcpl4hq7br" path="res://gourts/bodies/body0015.png" id="17_8fuj1"]
 [ext_resource type="Texture2D" uid="uid://clgl4nchgb766" path="res://gourts/faces/face0041.png" id="17_di45t"]
+[ext_resource type="Texture2D" uid="uid://02hmh8m84g28" path="res://gourts/bodies/body0016.png" id="18_kkqxh"]
 [ext_resource type="Texture2D" uid="uid://xkcwvqlslti2" path="res://gourts/faces/face0039.png" id="18_wpwo2"]
 [ext_resource type="Texture2D" uid="uid://gca7jcf6hj15" path="res://gourts/faces/face0066.png" id="19_xfcq7"]
+[ext_resource type="Texture2D" uid="uid://bpu0r3hre0acu" path="res://gourts/bodies/body0017.png" id="19_xn25c"]
 [ext_resource type="Texture2D" uid="uid://beteydpkr2vv7" path="res://gourts/faces/face0067.png" id="20_c6ysu"]
 [ext_resource type="Texture2D" uid="uid://ca2lh07gqangg" path="res://gourts/faces/face0068.png" id="21_qnpdg"]
 [ext_resource type="Texture2D" uid="uid://bs4vdm2dndxn1" path="res://gourts/faces/face0042.png" id="22_02ip1"]
@@ -83,6 +90,10 @@
 [ext_resource type="Texture2D" uid="uid://iri2qcnrqg18" path="res://gourts/faces/face0028.png" id="80_3hv3k"]
 [ext_resource type="Texture2D" uid="uid://ovkailsr7bks" path="res://gourts/faces/face0029.png" id="81_nc8ok"]
 
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
+radius = 39.0
+height = 132.0
+
 [sub_resource type="SpriteFrames" id="SpriteFrames_7rkiu"]
 animations = [{
 "frames": [{
@@ -140,6 +151,29 @@ animations = [{
 "loop": true,
 "name": &"restive",
 "speed": 13.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("14_dml2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_u1wb2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_6ee4t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_8fuj1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_kkqxh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_xn25c")
+}],
+"loop": true,
+"name": &"transportative",
+"speed": 5.0
 }]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_matdj"]
@@ -471,17 +505,30 @@ animations = [{
 }]
 
 [node name="Guort" type="CharacterBody2D"]
-position = Vector2(102, 76)
+collision_layer = 7
+collision_mask = 7
+input_pickable = true
+slide_on_ceiling = false
+platform_floor_layers = 4294967047
+platform_wall_layers = 6
+script = ExtResource("1_mqv0r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-3, -10)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ra35n")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"restive"
-frame_progress = 0.506866
+animation = &"transportative"
+frame_progress = 0.338104
 script = ExtResource("13_esvsc")
-idle_animations = Array[StringName]([&"furtive", &"palliative", &"pensive", &"restive"])
+idle_animations = Array[StringName]([&"furtive", &"pensive"])
 
-[node name="Face" type="AnimatedSprite2D" parent="."]
+[node name="Face" type="AnimatedSprite2D" parent="Body"]
+position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
 animation = &"aboundless"
-frame_progress = 0.408174
+frame_progress = 0.853041
 script = ExtResource("13_esvsc")
