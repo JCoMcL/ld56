@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=5 format=3 uid="uid://cjknd176i4hwb"]
 
 [ext_resource type="Script" path="res://mouse.gd" id="1_f1uwk"]
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
+[ext_resource type="PackedScene" uid="uid://dqloi4suw2h27" path="res://default_camera.tscn" id="3_gpkoy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnylh"]
 size = Vector2(817, 120)
@@ -16,8 +17,7 @@ script = ExtResource("1_f1uwk")
 [node name="GourtPile" parent="." instance=ExtResource("1_mecn1")]
 position = Vector2(-1, -91)
 
-[node name="Camera2D" type="Camera2D" parent="."]
-position = Vector2(2, -213)
+[node name="Camera2D" parent="GourtPile" instance=ExtResource("3_gpkoy")]
 
 [node name="floor" type="StaticBody2D" parent="."]
 z_index = -2

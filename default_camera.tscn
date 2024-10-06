@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqloi4suw2h27"]
+
+[ext_resource type="Script" path="res://default_camera.gd" id="1_0afco"]
+
+[node name="Camera2D" type="Camera2D"]
+position = Vector2(3, -122)
+zoom = Vector2(0.795, 0.795)
+limit_left = -1000
+limit_top = -1000
+limit_right = 1000
+limit_bottom = 1000
+limit_smoothed = true
+script = ExtResource("1_0afco")
+mouse_influence = 0.15
+mouse_deadzone = 200.0
+zoom_factor = 2.0
