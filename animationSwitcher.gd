@@ -1,6 +1,7 @@
 extends AnimatedSprite2D
 
 @export var idle_animations: Array[StringName] = []
+@export var reserved_animations: Array[StringName] = []
 var rng = RandomNumberGenerator.new()
 
 var current_idle
@@ -12,5 +13,6 @@ func idle(pick_new: bool = false):
 func _ready() -> void:
 	if not idle_animations.size():
 		for s in sprite_frames.get_animation_names():
-			idle_animations.append(StringName(s))
+			if s not in reserved_animations:
+				idle_animations.append(StringName(s))
 	idle()

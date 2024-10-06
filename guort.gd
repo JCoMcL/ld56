@@ -5,6 +5,7 @@ extends CharacterBody2D
 enum Direction {LEFT, RIGHT}
 @export var facing: Direction
 @export var label: String = "Guort with no name"
+@export var sleeping = false
 
 signal landed
 signal stopped
@@ -55,8 +56,12 @@ func track_if_landed():
 	prev_on_floor = is_on_floor()
 	
 func on_stop():
-	$Body.idle()
-	$Body/Face.idle()
+	idle()
+
+func idle(new_idle=false):
+	$Body.idle(new_idle)
+	$Body/Face.idle(new_idle)
+	
 	
 func bottom_behaviour(delta: float) -> void:
 	if not is_on_floor():
@@ -76,6 +81,15 @@ func bottom_behaviour(delta: float) -> void:
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
 		bottom_behaviour(delta)
-	
 
-	
+# Behaviours
+func sleep():
+	$Body.play("palliative")
+	$Body/Face.play("sleep")
+	sleeping = true
+	$ClickDetector.inhibit()
+func wakeup():
+	sleeping = false
+	$ClickDetector.enable()
+	idle()
+		

@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=4 format=3 uid="uid://cjknd176i4hwb"]
 
+[ext_resource type="Script" path="res://mouse.gd" id="1_f1uwk"]
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wnylh"]
@@ -7,6 +8,10 @@ size = Vector2(817, 120)
 
 [node name="Level" type="Node2D"]
 y_sort_enabled = true
+
+[node name="Mouse" type="Node2D" parent="."]
+position = Vector2(2, 81)
+script = ExtResource("1_f1uwk")
 
 [node name="GourtPile" parent="." instance=ExtResource("1_mecn1")]
 position = Vector2(-1, -91)
@@ -27,5 +32,5 @@ offset_bottom = 121.0
 color = Color(0.252981, 0.240769, 0.34455, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
-position = Vector2(-1.5, 62)
+position = Vector2(1, 117)
 shape = SubResource("RectangleShape2D_wnylh")

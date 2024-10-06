@@ -1,4 +1,4 @@
-[gd_scene load_steps=100 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=108 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -41,11 +41,17 @@
 [ext_resource type="Texture2D" uid="uid://d200bf1hmjfcl" path="res://gourts/faces/face0036.png" id="25_gcwi5"]
 [ext_resource type="Texture2D" uid="uid://cx3jmkb3m52l0" path="res://gourts/faces/face0037.png" id="26_8xmrh"]
 [ext_resource type="Texture2D" uid="uid://bpkwni0loj18p" path="res://gourts/faces/face0038.png" id="27_ixrka"]
+[ext_resource type="Texture2D" uid="uid://cig2ss8xj70gq" path="res://gourts/faces/face0069.png" id="27_uv55e"]
+[ext_resource type="Texture2D" uid="uid://ygf3jq7ft8aw" path="res://gourts/faces/face0070.png" id="28_7ugdm"]
 [ext_resource type="Texture2D" uid="uid://bvemhkrg32ytq" path="res://gourts/faces/face0033.png" id="28_fvdwh"]
+[ext_resource type="Texture2D" uid="uid://bkdga2tmhn7uh" path="res://gourts/faces/face0071.png" id="29_2exww"]
 [ext_resource type="Texture2D" uid="uid://csgid5456ksqv" path="res://gourts/faces/face0034.png" id="29_xe164"]
+[ext_resource type="Texture2D" uid="uid://deen46y43nua7" path="res://gourts/faces/face0072.png" id="30_4kaye"]
 [ext_resource type="Texture2D" uid="uid://d5emmtrloqfy" path="res://gourts/faces/face0035.png" id="30_jlh2p"]
 [ext_resource type="Texture2D" uid="uid://bkwouto3x0287" path="res://gourts/faces/face0006.png" id="31_f01fa"]
+[ext_resource type="Texture2D" uid="uid://dd6c7if5ncj0s" path="res://gourts/faces/face0073.png" id="31_fwr1f"]
 [ext_resource type="Texture2D" uid="uid://cuks0cl5p4o8h" path="res://gourts/faces/face0007.png" id="32_3xmuj"]
+[ext_resource type="Texture2D" uid="uid://jnwkdy6ghl0t" path="res://gourts/faces/face0074.png" id="32_aa0hd"]
 [ext_resource type="Texture2D" uid="uid://n5a3emn0m025" path="res://gourts/faces/face0008.png" id="33_0fobj"]
 [ext_resource type="Texture2D" uid="uid://2ab60dtvfg0s" path="res://gourts/faces/face0012.png" id="34_5q46a"]
 [ext_resource type="Texture2D" uid="uid://cx4h243ujgasx" path="res://gourts/faces/face0013.png" id="35_tgj76"]
@@ -96,6 +102,7 @@
 [ext_resource type="Texture2D" uid="uid://iri2qcnrqg18" path="res://gourts/faces/face0028.png" id="80_3hv3k"]
 [ext_resource type="Texture2D" uid="uid://ovkailsr7bks" path="res://gourts/faces/face0029.png" id="81_nc8ok"]
 [ext_resource type="Script" path="res://socket.gd" id="90_nr5he"]
+[ext_resource type="Script" path="res://click_detector.gd" id="103_286mj"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7rkiu"]
 animations = [{
@@ -466,6 +473,44 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
+"texture": ExtResource("27_uv55e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_7ugdm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_uv55e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_7ugdm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_2exww")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_4kaye")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_fwr1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_aa0hd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_fwr1f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_aa0hd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_4kaye")
+}],
+"loop": true,
+"name": &"sleep",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
 "texture": ExtResource("67_lacsa")
 }, {
 "duration": 1.0,
@@ -536,37 +581,50 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
-radius = 39.0
-height = 132.0
+radius = 68.9999
+height = 196.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxw6m"]
+size = Vector2(301, 224)
 
 [node name="Guort" type="CharacterBody2D"]
 collision_mask = 2
-input_pickable = true
 slide_on_ceiling = false
 platform_floor_layers = 4294967294
 script = ExtResource("1_mqv0r")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"advantive"
-frame_progress = 0.117064
+animation = &"furtive"
+frame_progress = 0.090169
 script = ExtResource("13_esvsc")
 idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
-animation = &"aboundless"
-frame_progress = 0.853041
+animation = &"listless"
+frame_progress = 0.799064
 script = ExtResource("13_esvsc")
+reserved_animations = Array[StringName]([&"sleep"])
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 z_index = 1
-position = Vector2(-3, -10)
+position = Vector2(-6, -19)
 rotation = 1.5708
 shape = SubResource("CapsuleShape2D_ra35n")
 
 [node name="Socket" type="Node2D" parent="."]
-position = Vector2(-16, -75)
+position = Vector2(-17, -76)
 script = ExtResource("90_nr5he")
 speed = 3.9
+
+[node name="ClickDetector" type="Area2D" parent="."]
+collision_layer = 4
+script = ExtResource("103_286mj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickDetector"]
+position = Vector2(-3.5, -2)
+shape = SubResource("RectangleShape2D_cxw6m")
+
+[connection signal="input_event" from="." to="." method="_on_input_event"]
