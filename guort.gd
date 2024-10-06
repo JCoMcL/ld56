@@ -16,11 +16,11 @@ func attach(gourt: Node):
 		$Socket.add_child(gourt)
 		up_neighbour = gourt
 		gourt.down_neighbour = self
-		$Socket.start_flip.connect(up_neighbour.flip)
 	
 func _ready() -> void:
 	landed.connect(on_stop)
 	stopped.connect(on_stop)
+	identify()
 
 func set_facing(direction: int):
 	if direction != facing:
@@ -34,8 +34,8 @@ func feeling():
 	return "{0}ly {1}".format([$Body.animation, $Body/Face.animation])
 
 func flip_self():
-	transform.x *= -1
-	$Socket.transform.x *= -1
+	for c in [$CollisionShape2D, $Body]:
+		c.transform.x *=-1
 func flip_socket():
 	$Socket.flip()	
 func flip():

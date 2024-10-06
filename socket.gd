@@ -8,17 +8,28 @@ var target_x
 var flippin = false
 
 func flip():
-	position.x *= -1
 	if not target_x:
-		target_x = position.x 
+		position.x *= -1
+	else:
+		target_x *= -1
+		
 
 func _ready() -> void:
 	target_x = position.x
+	#done_flip.connect(flip_attached)
+	start_flip.connect(flip_socket_of_attached)
+
 
 func flip_attached():
 	var child = get_child(0)
 	if child:
-		child.flip(false)
+		child.flip_self()
+
+func flip_socket_of_attached():
+	var child = get_child(0)
+	if child:
+		child.flip_socket()
+	
 
 func _process(delta: float) -> void:
 	if position.x != target_x:
@@ -26,12 +37,10 @@ func _process(delta: float) -> void:
 			flippin = true
 			start_flip.emit()
 		var displacement_to_target = target_x - position.x
-		print(displacement_to_target)
-		if displacement_to_target > -1.0:
+		if abs(displacement_to_target) < 0.3:
 			position.x = target_x
 			done_flip.emit()
 			flippin = false
 		else:
 			var increment = min(speed, displacement_to_target * speed) * delta
-			print("moving by {0}".format([increment]))
 			position.x += increment
