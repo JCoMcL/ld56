@@ -38,6 +38,9 @@ func adjust_zoom():
 
 func _process(delta):
 	adjust_zoom()
+	if position.y > limit_bottom * 2:
+		get_tree().current_scene.restart()
+
 	var target_pos = initial_pos
 	if target:
 		target_pos = target.global_position
