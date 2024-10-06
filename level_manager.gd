@@ -25,7 +25,8 @@ func reset_level(variable):
 	
 func restart():
 	$AnimationPlayer.play("close")
-	$AnimationPlayer.animation_finished.connect(reset_level)
+	if not $AnimationPlayer.animation_finished.is_connected(reset_level):
+		$AnimationPlayer.animation_finished.connect(reset_level)
 	
 	
 	
