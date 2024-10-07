@@ -48,7 +48,7 @@ func set_facing(direction: int):
 		flip()
 	facing = direction
 
-func identify(additional_remark: String = ""):
+func identify(additional_remark = ""):
 	print("I, {0}, am feeling {1}! {2}".format([label, feeling(), additional_remark]))
 
 func feeling():
@@ -103,14 +103,23 @@ func bottom_behaviour(delta: float) -> void:
 	track_if_landed()
 	move_and_slide()
 
-func on_nearby_click(where: Vector2):
-	if input_enabled:
-		if where.y < 0:
-			poke_up()
-		else:
-			poke_down()
-	else:
-		identify("input disabled")
+func test_spread(f: float, within: float, of: float) -> bool:
+	return (of - within) < f and f < (of + within)
+	
+func on_nearby_click(where: Vector2):	
+	if not input_enabled:
+		identify("input disabled (looks like you've reached a code path that was never supposed to be reached)")
+		return
+	var angle = rad_to_deg(where.angle()) + 135
+	if test_spread(angle, 30, 45):
+		return poke_up()
+	if test_spread(angle, 20, 135):
+		return grab_left()
+	if test_spread(angle, 30, 225) :
+		return poke_down()
+	if test_spread(angle, 20, 315):
+		return grab_right()
+		
 
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
@@ -133,9 +142,9 @@ func offset_face_for_animation(offset: Vector2):
 		$Body/Face.position = saved_pos
 # Behaviours
 func sleep():
+	disable_input_for_animation()
 	$Body.play(["palliative", "restive"].pick_random())
 	$Body/Face.play("sleep")
-	disable_input_for_animation()
 	sleeping = true
 	$ClickDetector.inhibit()
 	$Socket.position.y = -60
@@ -150,11 +159,23 @@ func wakeup():
 func poke_up():
 	offset_face_for_animation(Vector2(20,-20))
 	$Body.play("poke_up")
-	up_neighbour.poked()
+	if up_neighbour:
+		up_neighbour.poked()
 func poke_down():
 	offset_face_for_animation(Vector2(-20,20))
 	$Body.play("poke_down")
-	down_neighbour.poked()
+	if down_neighbour:
+		down_neighbour.poked()
+func grab():
+	identify("grab")
+	offset_face_for_animation(Vector2(40,0))
+	$Body.play("grab")
+func grab_right():
+	grab()
+	set_facing(Direction.RIGHT)
+func grab_left():
+	grab()
+	set_facing(Direction.LEFT)
 func poked():
 	bump_patience()
 	wakeup()

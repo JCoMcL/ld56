@@ -1,4 +1,4 @@
-[gd_scene load_steps=118 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=119 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://b8s3dgn3egpnq" path="res://gourts/bodies/body0004.png" id="8_6metm"]
 [ext_resource type="Texture2D" uid="uid://c58rtrmbc5khp" path="res://gourts/bodies/body0005.png" id="9_maubn"]
 [ext_resource type="Texture2D" uid="uid://cghi2ipykvsmw" path="res://gourts/bodies/body0006.png" id="10_u837m"]
+[ext_resource type="Texture2D" uid="uid://cfpvuwilwlqhr" path="res://gourts/grab.png" id="10_vlj2v"]
 [ext_resource type="Texture2D" uid="uid://bl16fgdohhsae" path="res://gourts/bodies/body0007.png" id="11_wmph5"]
 [ext_resource type="Texture2D" uid="uid://3pdwmehmebsn" path="res://gourts/bodies/body0008.png" id="12_0bvvx"]
 [ext_resource type="Texture2D" uid="uid://bmmfcrdtu6r2n" path="res://gourts/faces/face0063.png" id="13_24oif"]
@@ -142,6 +143,14 @@ animations = [{
 "loop": true,
 "name": &"furtive",
 "speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("10_vlj2v")
+}],
+"loop": false,
+"name": &"grab",
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -657,7 +666,7 @@ script = ExtResource("3_doxa6")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"poke_up"
+animation = &"grab"
 script = ExtResource("26_olj8s")
 idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
 
