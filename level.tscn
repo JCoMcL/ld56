@@ -1,36 +1,58 @@
-[gd_scene load_steps=5 format=3 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=10 format=4 uid="uid://cjknd176i4hwb"]
 
 [ext_resource type="Script" path="res://mouse.gd" id="1_f1uwk"]
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
 [ext_resource type="PackedScene" uid="uid://dqloi4suw2h27" path="res://default_camera.tscn" id="3_gpkoy"]
+[ext_resource type="Texture2D" uid="uid://c12ig5rsnyoth" path="res://environment/tiles.png" id="4_erbpb"]
+[ext_resource type="Texture2D" uid="uid://6r0f0ewdp005" path="res://environment/boss door.png" id="5_qydu4"]
+[ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="6_1yrpj"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wnylh"]
-size = Vector2(817, 120)
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_myn7x"]
+texture = ExtResource("4_erbpb")
+texture_region_size = Vector2i(256, 256)
+1:0/0 = 0
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(42.6667, -128, 42.6667, 128, -128, 128, -128, -128)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 42.6667, 128, 42.6667, 128, 128, -128, 128)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(42.6667, -128, 42.6667, 42.6667, 128, 42.6667, 128, 128, -128, 128, -128, -128)
+
+[sub_resource type="TileSet" id="TileSet_d3872"]
+tile_size = Vector2i(256, 256)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_myn7x")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jsixy"]
+size = Vector2(294, 593)
 
 [node name="Level" type="Node2D"]
-y_sort_enabled = true
 
 [node name="Mouse" type="Node2D" parent="."]
 position = Vector2(2, 81)
 script = ExtResource("1_f1uwk")
 
 [node name="GourtPile" parent="." instance=ExtResource("1_mecn1")]
-position = Vector2(-1, -91)
+z_index = 2
+y_sort_enabled = false
+position = Vector2(-1, -271)
 
 [node name="Camera2D" parent="GourtPile" instance=ExtResource("3_gpkoy")]
 
-[node name="floor" type="StaticBody2D" parent="."]
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
 z_index = -2
-position = Vector2(2, 81)
-collision_layer = 2
+tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAEAAAACAAAAAAABAAEAAAADAAAAAAABAAEAAAAEAAAAAAABAAEAAAAFAAAAAAAAAAEAABD+/wAAAAABAAEAAAD9/wAAAAABAAEAAAD8/wAAAAABAAEAAAD7/wAAAAAAAAEAAAD7////AAAAAAAAAAD8////AAABAAAAAAD9////AAABAAAAAAD+////AAABAAAAAAD/////AAABAAAAAAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAAEAP//AAABAAAAAAAFAP//AAAAAAAAABAFAP7/AAAAAAAAADAEAP7/AAABAAAAAAADAP7/AAABAAAAAAACAP7/AAABAAAAAAABAP7/AAABAAAAAAAAAP7/AAABAAAAAAD///7/AAABAAAAAAD+//7/AAABAAAAAAD9//7/AAABAAAAAAD8//7/AAABAAAAAAD7//7/AAAAAAAAACD7//3/AAAAAAAAAAD7//z/AAAAAAAAAAD8//z/AAABAAAAAAD9//z/AAABAAAAAAD+//z/AAABAAAAAAD///z/AAABAAAAAAAAAPz/AAABAAAAAAABAPz/AAABAAAAAAACAPz/AAABAAAAAAADAPz/AAABAAAAAAAEAPz/AAABAAAAAAAFAPz/AAAAAAAAABAFAP3/AAAAAAAAABAEAP3/AAABAAAAAAADAP3/AAABAAAAAAACAP3/AAABAAAAAAABAP3/AAABAAAAAAAAAP3/AAABAAAAAAD///3/AAABAAAAAAD+//3/AAABAAAAAAD9//3/AAABAAAAAAD8//3/AAABAAAAAAD7//v/AAAAAAAAAAD7//r/AAAAAAAAAAD7//n/AAAAAAAAAAD7//j/AAAAAAAAAAAFAPv/AAAAAAAAABAFAPr/AAAAAAAAABAFAPn/AAAAAAAAABAFAPj/AAAAAAAAABAFAPf/AAAAAAAAABD8//v/AAABAAAAAAD9//v/AAABAAAAAAD+//v/AAABAAAAAAD///v/AAABAAAAAAAAAPv/AAABAAAAAAABAPv/AAABAAAAAAACAPv/AAABAAAAAAADAPv/AAABAAAAAAAEAPv/AAABAAAAAAAEAPr/AAABAAAAAAAEAPn/AAABAAAAAAAEAPj/AAABAAAAAAAEAPf/AAABAAAAAAADAPf/AAABAAAAAAACAPf/AAABAAAAAAABAPf/AAABAAAAAAAAAPf/AAABAAAAAAAAAPj/AAABAAAAAAD///j/AAABAAAAAAD+//j/AAABAAAAAAD9//j/AAABAAAAAAD8//j/AAABAAAAAAD8//n/AAABAAAAAAD8//r/AAABAAAAAAD9//r/AAABAAAAAAD9//n/AAABAAAAAAD+//n/AAABAAAAAAD///n/AAABAAAAAAAAAPn/AAABAAAAAAABAPn/AAABAAAAAAACAPn/AAABAAAAAAADAPn/AAABAAAAAAADAPj/AAABAAAAAAACAPj/AAABAAAAAAABAPj/AAABAAAAAAD+//r/AAABAAAAAAD///r/AAABAAAAAAAAAPr/AAABAAAAAAABAPr/AAABAAAAAAACAPr/AAABAAAAAAADAPr/AAABAAAAAAD///f/AAABAAAAAAD+//f/AAABAAAAAAD9//f/AAABAAAAAAD8//f/AAABAAAAAAD7//f/AAAAAAAAAAA=")
+tile_set = SubResource("TileSet_d3872")
 
-[node name="ColorRect" type="ColorRect" parent="floor"]
-offset_left = -408.0
-offset_top = 1.0
-offset_right = 410.0
-offset_bottom = 121.0
-color = Color(0.252981, 0.240769, 0.34455, 1)
+[node name="BossDoor" type="Sprite2D" parent="TileMapLayer"]
+position = Vector2(970, -129)
+texture = ExtResource("5_qydu4")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="floor"]
-position = Vector2(1, 117)
-shape = SubResource("RectangleShape2D_wnylh")
+[node name="Area2D" type="Area2D" parent="TileMapLayer/BossDoor"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/BossDoor/Area2D"]
+position = Vector2(113, -6.5)
+shape = SubResource("RectangleShape2D_jsixy")
+
+[node name="Area2D2" parent="TileMapLayer/BossDoor" instance=ExtResource("6_1yrpj")]
+position = Vector2(251, 68)

@@ -94,9 +94,9 @@ func bottom_behaviour(delta: float) -> void:
 		$Body.play("restive")
 
 	var target = Input.get_axis("go_left","go_right") * 200 if input_enabled else 0
-	if not down_neighbour:
-		velocity.x = move_toward(velocity.x, target, 20)
-		if not velocity.x == 0:
+	velocity.x = move_toward(velocity.x, target, 20)
+	if not velocity.x == 0:
+		if do_on_animation_end == nothing:
 			$Body.play("transportative")
 			set_facing(int(velocity.x > 0))
 	track_if_stopped()
@@ -122,8 +122,15 @@ func disable_input():
 func enable_input():
 	input_enabled = true
 func disable_input_for_animation():
+	on_animation_end()
 	disable_input()
 	do_on_animation_end = enable_input
+func offset_face_for_animation(offset: Vector2):
+	on_animation_end()
+	var saved_pos = $Body/Face.get_position()
+	$Body/Face.position += offset
+	do_on_animation_end = func():
+		$Body/Face.position = saved_pos
 # Behaviours
 func sleep():
 	$Body.play(["palliative", "restive"].pick_random())
@@ -132,19 +139,21 @@ func sleep():
 	sleeping = true
 	$ClickDetector.inhibit()
 	$Socket.position.y = -60
-	$SleepyParticles.emitting = true
+	$Body/SleepyParticles.emitting = true
 	$SleepySFX.play()
 func wakeup():
 	sleeping = false
 	$ClickDetector.enable()
 	$Socket.position.y = -88
-	$SleepyParticles.emitting  = false
+	$Body/SleepyParticles.emitting  = false
 	$SleepySFX.stop()
 func poke_up():
-	$Body.play_exclusive("poke_up")
+	offset_face_for_animation(Vector2(20,-20))
+	$Body.play("poke_up")
 	up_neighbour.poked()
 func poke_down():
-	$Body.play_exclusive("poke_down")
+	offset_face_for_animation(Vector2(-20,20))
+	$Body.play("poke_down")
 	down_neighbour.poked()
 func poked():
 	bump_patience()

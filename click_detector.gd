@@ -4,6 +4,7 @@ extends Area2D
 @export var debug: bool = false
 
 signal nearby_click(target: Vector2)
+signal click()
 
 func inhibit():
 	#collision_layer = 0
@@ -22,5 +23,5 @@ func _ready():
 	if debug:
 		nearby_click.connect(debug_msg)
 
-func debug_msg(target: Vector2):
-	get_parent().identify("Targeting {0}".format([target]))
+func debug_msg(target = null):
+	print(self, ("nearby click at %s" % target if target else "clicked"))

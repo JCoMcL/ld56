@@ -8,7 +8,7 @@ extends Camera2D
 
 # Zoom-related exports
 @export var reference_resolution: Vector2 = Vector2(1920, 1080)  # The resolution you're designing for
-@export_range(0.2, 10, 0.1) var zoom_factor: float = 1
+@export_range(0, 1, 0.01) var size_based_zoom_factor: float = 1
 
 # Internal variables
 var target: Node2D = null
@@ -16,12 +16,13 @@ var viewport_size: Vector2
 var screen_center: Vector2
 var current_velocity: Vector2 = Vector2.ZERO
 var initial_pos: Vector2
-@export var initial_offset: Vector2
+var initial_zoom: Vector2
 
 func _ready():	
 	viewport_size = get_viewport().size
 	screen_center = viewport_size / 2
 	initial_pos = position
+	initial_zoom = zoom
 
 func adjust_zoom():
 	viewport_size = get_viewport().size
@@ -33,20 +34,16 @@ func adjust_zoom():
 	
 	# Use the smaller zoom value to ensure the game area fits on screen
 	var new_zoom = min(zoom_x, zoom_y)
-	
-	# Apply zoom
-	zoom = Vector2(new_zoom, new_zoom) * zoom_factor
-	offset = initial_offset * new_zoom
+	zoom = initial_zoom.lerp(Vector2(new_zoom, new_zoom), size_based_zoom_factor)
 
-func _process(delta):
-	adjust_zoom()
-	if position.y > limit_bottom * 2:
-		get_tree().current_scene.restart()
-
+func _physics_process(delta: float) -> void:
 	var target_pos = initial_pos
 	if target:
 		target_pos = target.global_position
-
+	adjust_zoom()
+	if position.y > limit_bottom * 2:
+		get_tree().current_scene.restart()
+		
 	# Calculate mouse influence
 	var mouse_pos = get_viewport().get_mouse_position()
 	var mouse_offset = mouse_pos - screen_center

@@ -111,11 +111,7 @@
 [ext_resource type="Texture2D" uid="uid://iri2qcnrqg18" path="res://gourts/faces/face0028.png" id="80_3hv3k"]
 [ext_resource type="Texture2D" uid="uid://ovkailsr7bks" path="res://gourts/faces/face0029.png" id="81_nc8ok"]
 [ext_resource type="Script" path="res://socket.gd" id="90_nr5he"]
-[ext_resource type="Script" path="res://click_detector.gd" id="103_286mj"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5d1io"]
-atlas = ExtResource("2_v5acg")
-region = Rect2(0, 0, 64, 64)
+[ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="112_io5bt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7rkiu"]
 animations = [{
@@ -266,6 +262,10 @@ animations = [{
 "name": &"transportative",
 "speed": 5.0
 }]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5d1io"]
+atlas = ExtResource("2_v5acg")
+region = Rect2(0, 0, 64, 64)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_matdj"]
 animations = [{
@@ -637,10 +637,11 @@ animations = [{
 radius = 68.9999
 height = 196.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cxw6m"]
-size = Vector2(301, 224)
+[sub_resource type="CircleShape2D" id="CircleShape2D_3e6jw"]
+radius = 172.735
 
 [node name="Guort" type="CharacterBody2D"]
+z_index = 1
 collision_mask = 2
 slide_on_ceiling = false
 platform_floor_layers = 4294967294
@@ -654,32 +655,31 @@ stream = ExtResource("2_lxyxg")
 parameters/looping = true
 script = ExtResource("3_doxa6")
 
-[node name="SleepyParticles" type="CPUParticles2D" parent="."]
+[node name="Body" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_7rkiu")
+animation = &"poke_up"
+script = ExtResource("26_olj8s")
+idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
+
+[node name="SleepyParticles" type="CPUParticles2D" parent="Body"]
 z_index = 2
-position = Vector2(46, -15)
+position = Vector2(-94, 22)
 emitting = false
-amount = 4
-lifetime = 5.0
+amount = 3
+lifetime = 2.5
 randomness = 0.45
 lifetime_randomness = 0.14
 texture = SubResource("AtlasTexture_5d1io")
-direction = Vector2(1.5, -1)
+direction = Vector2(-1.5, -1)
 spread = 10.72
 gravity = Vector2(0, 0)
 initial_velocity_min = 40.0
 initial_velocity_max = 50.1
 
-[node name="Body" type="AnimatedSprite2D" parent="."]
-sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"palliative"
-script = ExtResource("26_olj8s")
-idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
-
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
-animation = &"sleep"
-frame_progress = 0.143579
+animation = &"harmless"
 script = ExtResource("13_esvsc")
 reserved_animations = Array[StringName]([&"sleep"])
 
@@ -694,12 +694,12 @@ position = Vector2(-17, -88)
 script = ExtResource("90_nr5he")
 speed = 3.9
 
-[node name="ClickDetector" type="Area2D" parent="."]
-collision_layer = 4
-script = ExtResource("103_286mj")
+[node name="ClickDetector" parent="." instance=ExtResource("112_io5bt")]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ClickDetector"]
-position = Vector2(-3.5, -2)
-shape = SubResource("RectangleShape2D_cxw6m")
+[node name="CollisionShape2D" parent="ClickDetector" index="0"]
+position = Vector2(-9.5, -2)
+shape = SubResource("CircleShape2D_3e6jw")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
+
+[editable path="ClickDetector"]
