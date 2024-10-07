@@ -30,7 +30,7 @@ func bump_patience():
 	if $Patience.time_left:
 		$Patience.start($Patience.time_left + 1)
 	else:
-		set_timer($Patience, 15, on_patience_expired)
+		set_timer($Patience, 24, on_patience_expired)
 
 func on_patience_expired():
 	sleep()

@@ -679,7 +679,7 @@ idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advan
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
 animation = &"sleep"
-frame_progress = 0.862706
+frame_progress = 0.143579
 script = ExtResource("13_esvsc")
 reserved_animations = Array[StringName]([&"sleep"])
 

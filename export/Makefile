@@ -1,2 +1,2 @@
-ld56.zip:
-	zip -r $@ web/*
+ld56.zip: web/index.html
+	zip --junk-paths -r $@ web/*

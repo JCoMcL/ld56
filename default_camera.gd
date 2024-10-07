@@ -16,6 +16,7 @@ var viewport_size: Vector2
 var screen_center: Vector2
 var current_velocity: Vector2 = Vector2.ZERO
 var initial_pos: Vector2
+@export var initial_offset: Vector2
 
 func _ready():	
 	viewport_size = get_viewport().size
@@ -35,6 +36,7 @@ func adjust_zoom():
 	
 	# Apply zoom
 	zoom = Vector2(new_zoom, new_zoom) * zoom_factor
+	offset = initial_offset * new_zoom
 
 func _process(delta):
 	adjust_zoom()
@@ -60,7 +62,7 @@ func _process(delta):
 	var final_target = lerp(target_pos, mouse_target, mouse_influence)
 	
 	# Smoothly move camera towards target
-	var ideal_position = final_target - offset
+	var ideal_position = final_target
 	global_position = global_position.lerp(ideal_position, camera_speed * delta)
 
 # Optional method to change target at runtime
