@@ -120,7 +120,6 @@ func on_nearby_click(where: Vector2):
 	if test_spread(angle, 20, 315):
 		return grab_right()
 		
-
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
 		bottom_behaviour(delta)

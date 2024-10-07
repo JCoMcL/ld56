@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=4 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=15 format=4 uid="uid://cjknd176i4hwb"]
 
 [ext_resource type="Script" path="res://mouse.gd" id="1_f1uwk"]
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c12ig5rsnyoth" path="res://environment/tiles.png" id="4_erbpb"]
 [ext_resource type="Texture2D" uid="uid://6r0f0ewdp005" path="res://environment/boss door.png" id="5_qydu4"]
 [ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="6_1yrpj"]
+[ext_resource type="Texture2D" uid="uid://c6s71fjd5h5sd" path="res://environment/boss door open.png" id="6_tj102"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_myn7x"]
 texture = ExtResource("4_erbpb")
@@ -23,8 +24,114 @@ tile_size = Vector2i(256, 256)
 physics_layer_0/collision_layer = 2
 sources/0 = SubResource("TileSetAtlasSource_myn7x")
 
+[sub_resource type="SpriteFrames" id="SpriteFrames_x1lcb"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("5_qydu4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_tj102")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_tj102")
+}],
+"loop": false,
+"name": &"open",
+"speed": 5.0
+}]
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsixy"]
-size = Vector2(294, 593)
+size = Vector2(298, 501)
+
+[sub_resource type="Animation" id="Animation_cagkp"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(251, 68), Vector2(-134, 40)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Entrance/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_hm67a"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Area2D2:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(251, 68)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Entrance/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ljjum"]
+_data = {
+"RESET": SubResource("Animation_hm67a"),
+"open": SubResource("Animation_cagkp")
+}
 
 [node name="Level" type="Node2D"]
 
@@ -44,15 +151,21 @@ z_index = -2
 tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAEAAAACAAAAAAABAAEAAAADAAAAAAABAAEAAAAEAAAAAAABAAEAAAAFAAAAAAAAAAEAABD+/wAAAAABAAEAAAD9/wAAAAABAAEAAAD8/wAAAAABAAEAAAD7/wAAAAAAAAEAAAD7////AAAAAAAAAAD8////AAABAAAAAAD9////AAABAAAAAAD+////AAABAAAAAAD/////AAABAAAAAAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAADAP//AAABAAAAAAAEAP//AAABAAAAAAAFAP//AAAAAAAAABAFAP7/AAAAAAAAADAEAP7/AAABAAAAAAADAP7/AAABAAAAAAACAP7/AAABAAAAAAABAP7/AAABAAAAAAAAAP7/AAABAAAAAAD///7/AAABAAAAAAD+//7/AAABAAAAAAD9//7/AAABAAAAAAD8//7/AAABAAAAAAD7//7/AAAAAAAAACD7//3/AAAAAAAAAAD7//z/AAAAAAAAAAD8//z/AAABAAAAAAD9//z/AAABAAAAAAD+//z/AAABAAAAAAD///z/AAABAAAAAAAAAPz/AAABAAAAAAABAPz/AAABAAAAAAACAPz/AAABAAAAAAADAPz/AAABAAAAAAAEAPz/AAABAAAAAAAFAPz/AAAAAAAAABAFAP3/AAAAAAAAABAEAP3/AAABAAAAAAADAP3/AAABAAAAAAACAP3/AAABAAAAAAABAP3/AAABAAAAAAAAAP3/AAABAAAAAAD///3/AAABAAAAAAD+//3/AAABAAAAAAD9//3/AAABAAAAAAD8//3/AAABAAAAAAD7//v/AAAAAAAAAAD7//r/AAAAAAAAAAD7//n/AAAAAAAAAAD7//j/AAAAAAAAAAAFAPv/AAAAAAAAABAFAPr/AAAAAAAAABAFAPn/AAAAAAAAABAFAPj/AAAAAAAAABAFAPf/AAAAAAAAABD8//v/AAABAAAAAAD9//v/AAABAAAAAAD+//v/AAABAAAAAAD///v/AAABAAAAAAAAAPv/AAABAAAAAAABAPv/AAABAAAAAAACAPv/AAABAAAAAAADAPv/AAABAAAAAAAEAPv/AAABAAAAAAAEAPr/AAABAAAAAAAEAPn/AAABAAAAAAAEAPj/AAABAAAAAAAEAPf/AAABAAAAAAADAPf/AAABAAAAAAACAPf/AAABAAAAAAABAPf/AAABAAAAAAAAAPf/AAABAAAAAAAAAPj/AAABAAAAAAD///j/AAABAAAAAAD+//j/AAABAAAAAAD9//j/AAABAAAAAAD8//j/AAABAAAAAAD8//n/AAABAAAAAAD8//r/AAABAAAAAAD9//r/AAABAAAAAAD9//n/AAABAAAAAAD+//n/AAABAAAAAAD///n/AAABAAAAAAAAAPn/AAABAAAAAAABAPn/AAABAAAAAAACAPn/AAABAAAAAAADAPn/AAABAAAAAAADAPj/AAABAAAAAAACAPj/AAABAAAAAAABAPj/AAABAAAAAAD+//r/AAABAAAAAAD///r/AAABAAAAAAAAAPr/AAABAAAAAAABAPr/AAABAAAAAAACAPr/AAABAAAAAAADAPr/AAABAAAAAAD///f/AAABAAAAAAD+//f/AAABAAAAAAD9//f/AAABAAAAAAD8//f/AAABAAAAAAD7//f/AAAAAAAAAAA=")
 tile_set = SubResource("TileSet_d3872")
 
-[node name="BossDoor" type="Sprite2D" parent="TileMapLayer"]
-position = Vector2(970, -129)
-texture = ExtResource("5_qydu4")
+[node name="BossDoor" type="AnimatedSprite2D" parent="TileMapLayer"]
+position = Vector2(970, -131)
+sprite_frames = SubResource("SpriteFrames_x1lcb")
 
-[node name="Area2D" type="Area2D" parent="TileMapLayer/BossDoor"]
+[node name="Entrance" type="Area2D" parent="TileMapLayer/BossDoor"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/BossDoor/Area2D"]
-position = Vector2(113, -6.5)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/BossDoor/Entrance"]
+position = Vector2(115, 39.5)
 shape = SubResource("RectangleShape2D_jsixy")
+disabled = true
 
 [node name="Area2D2" parent="TileMapLayer/BossDoor" instance=ExtResource("6_1yrpj")]
 position = Vector2(251, 68)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="TileMapLayer/BossDoor"]
+libraries = {
+"": SubResource("AnimationLibrary_ljjum")
+}
