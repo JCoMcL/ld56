@@ -198,7 +198,7 @@ func bonk():
 	$Body/SlappyParticles.restart()
 	$Body/SlappyParticles.emitting = true
 	$Body.play("bonk")
-	$Body/Face.play(["sleepless", "harmless", "bounderless", "careless"].pick_random())
+	$Body/Face.play(["sleepless", "harmless", "bounderless", "aimless"].pick_random())
 	do_on_animation_end = sleep
 func grab_right(what: Area2D=null):
 	grab(what)

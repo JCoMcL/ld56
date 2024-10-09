@@ -767,7 +767,7 @@ color_ramp = SubResource("Gradient_ywrbi")
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
-animation = &"aimless"
+animation = &"weightless"
 script = ExtResource("13_esvsc")
 reserved_animations = Array[StringName]([&"sleep"])
 
