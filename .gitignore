@@ -5,3 +5,4 @@ export/*/*
 *.kra
 *.kra~
 export/*.zip
+*~
