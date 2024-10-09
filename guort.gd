@@ -195,6 +195,8 @@ func bonk():
 	wakeup()
 	on_animation_end()
 	$SlappySFX.play()
+	$Body/SlappyParticles.restart()
+	$Body/SlappyParticles.emitting = true
 	$Body.play("bonk")
 	$Body/Face.play(["sleepless", "harmless", "bounderless", "careless"].pick_random())
 	do_on_animation_end = sleep

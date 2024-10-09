@@ -1,4 +1,4 @@
-[gd_scene load_steps=122 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=125 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -67,6 +67,7 @@
 [ext_resource type="Texture2D" uid="uid://2ab60dtvfg0s" path="res://gourts/faces/face0012.png" id="34_5q46a"]
 [ext_resource type="Texture2D" uid="uid://cx4h243ujgasx" path="res://gourts/faces/face0013.png" id="35_tgj76"]
 [ext_resource type="Texture2D" uid="uid://cy37c8ig5xwid" path="res://gourts/faces/face0014.png" id="36_gwkww"]
+[ext_resource type="Texture2D" uid="uid://b8vglbhnihlwn" path="res://*.png" id="37_2qt7k"]
 [ext_resource type="Texture2D" uid="uid://6pdxcmqp47kv" path="res://gourts/faces/face0000.png" id="37_klf4d"]
 [ext_resource type="Texture2D" uid="uid://c868xafjiap4i" path="res://gourts/faces/face0001.png" id="38_h5hba"]
 [ext_resource type="Texture2D" uid="uid://kx8s5bwfe4nq" path="res://gourts/faces/face0002.png" id="39_gcghn"]
@@ -305,6 +306,14 @@ animations = [{
 [sub_resource type="AtlasTexture" id="AtlasTexture_5d1io"]
 atlas = ExtResource("2_v5acg")
 region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ru486"]
+atlas = ExtResource("37_2qt7k")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="Gradient" id="Gradient_ywrbi"]
+offsets = PackedFloat32Array(0, 0.836694, 0.993952)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_matdj"]
 animations = [{
@@ -726,6 +735,30 @@ spread = 10.72
 gravity = Vector2(0, 0)
 initial_velocity_min = 40.0
 initial_velocity_max = 50.1
+
+[node name="SlappyParticles" type="CPUParticles2D" parent="Body"]
+z_index = -1
+position = Vector2(-8, -20)
+emitting = false
+amount = 5
+lifetime = 0.3
+one_shot = true
+explosiveness = 0.93
+randomness = 0.46
+lifetime_randomness = 0.53
+local_coords = true
+texture = SubResource("AtlasTexture_ru486")
+direction = Vector2(0, 0)
+spread = 180.0
+gravity = Vector2(0, 0)
+initial_velocity_min = 1200.0
+initial_velocity_max = 1200.0
+angular_velocity_min = -381.18
+angular_velocity_max = 338.82
+damping_min = 4000.0
+damping_max = 4800.0
+scale_amount_max = 1.5
+color_ramp = SubResource("Gradient_ywrbi")
 
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
