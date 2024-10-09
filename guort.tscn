@@ -1,4 +1,4 @@
-[gd_scene load_steps=125 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=126 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -117,6 +117,7 @@
 [ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="112_io5bt"]
 [ext_resource type="AudioStream" uid="uid://c6u88mcxip422" path="res://sound/slap_0.ogg" id="114_5xv3e"]
 [ext_resource type="AudioStream" uid="uid://b8vkdvfj4x3nv" path="res://sound/slap_1.ogg" id="115_ssa24"]
+[ext_resource type="AudioStream" uid="uid://ba455qmdrjk3c" path="res://sound/slap_5.ogg" id="121_jgije"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
 radius = 68.9999
@@ -682,9 +683,12 @@ animations = [{
 }]
 
 [sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bvgy6"]
-streams_count = 2
+random_pitch = 1.71
+random_volume_offset_db = 1.05
+streams_count = 3
 stream_0/stream = ExtResource("114_5xv3e")
 stream_1/stream = ExtResource("115_ssa24")
+stream_2/stream = ExtResource("121_jgije")
 
 [node name="Guort" type="CharacterBody2D"]
 z_index = 1
