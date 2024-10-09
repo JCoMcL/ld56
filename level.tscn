@@ -50,7 +50,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsixy"]
-size = Vector2(298, 501)
+size = Vector2(223, 407)
 
 [sub_resource type="Animation" id="Animation_hm67a"]
 length = 0.001
@@ -165,7 +165,7 @@ script = ExtResource("8_vl2ei")
 whats_on_the_other_side = ExtResource("9_cvnjp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/BossDoor/Entrance"]
-position = Vector2(115, 39.5)
+position = Vector2(100.5, 86.5)
 shape = SubResource("RectangleShape2D_jsixy")
 disabled = true
 

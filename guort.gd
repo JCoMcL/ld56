@@ -86,7 +86,6 @@ func on_animation_end():
 	do_on_animation_end = nothing # guard against infinite recursion
 	f.call()
 	
-	
 func idle(new_idle=false):
 	$Body.idle(new_idle)
 	
@@ -123,22 +122,23 @@ func on_nearby_click(where: Vector2, what: Area2D):
 	if test_spread(angle, 20, 315):
 		return grab_right(what)
 
-func can_enter_door(door: Area2D = null) -> bool:
+func can_enter_door(door: Area2D):
+	if not door.can_enter(self):
+		bonk()
+		if up_neighbour:
+			up_neighbour.can_enter_door(door) # we do this just to get the bonk animation, the inefficiency is part of the humor
+		return false
+	if up_neighbour:
+		return up_neighbour.can_enter_door(door)
+	return true
+
+func enter_door(door: Area2D = null) -> void:
 	if not door:
 		door = $doorFinder.find_door()
-	if not door:
-		return false
-	return $doorFinder.can_enter_door(door)# and up_neighbour.can_enter_door(door) if up_neighbour else true
-
-func enter_door():
-	var door = $doorFinder.find_door()
-	if not door and down_neighbour:
-		bonk()
-	elif up_neighbour:
-		up_neighbour.enter_door()
-	else:
-		door.enter_door()
-		
+		if not door:
+			return
+	if can_enter_door(door):
+		door.enter() 
 	
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
@@ -196,7 +196,7 @@ func bonk():
 	on_animation_end()
 	$SlappySFX.play()
 	$Body.play("bonk")
-	$Body/Face.play(["sleepless", "harmless", "bounderless", "carless"].pick_random())
+	$Body/Face.play(["sleepless", "harmless", "bounderless", "careless"].pick_random())
 	do_on_animation_end = sleep
 func grab_right(what: Area2D=null):
 	grab(what)
