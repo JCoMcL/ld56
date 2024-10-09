@@ -3,9 +3,10 @@
 [ext_resource type="Script" path="res://click_detector.gd" id="1_7k6nx"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x3nsj"]
-radius = 64.4981
+radius = 137.033
 
-[node name="Area2D" type="Area2D"]
+[node name="ClickDetector" type="Area2D"]
+collision_layer = 4
 script = ExtResource("1_7k6nx")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

@@ -22,6 +22,10 @@ func reset_level(variable):
 	add_level()
 	$AnimationPlayer.animation_finished.disconnect(reset_level)
 	$AnimationPlayer.play("open")
+
+func new_level(new_level_scene: PackedScene):
+	level_scene = new_level_scene
+	restart()
 	
 func restart():
 	$AnimationPlayer.play("close")

@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=4 uid="uid://cjknd176i4hwb"]
+
+[ext_resource type="Script" path="res://mouse.gd" id="1_b7kgq"]
+[ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="2_tu5ac"]
+[ext_resource type="PackedScene" uid="uid://dqloi4suw2h27" path="res://default_camera.tscn" id="3_kc46a"]
+[ext_resource type="Texture2D" uid="uid://c12ig5rsnyoth" path="res://environment/tiles.png" id="4_ui8os"]
+[ext_resource type="Texture2D" uid="uid://c0nvecggbtnjd" path="res://environment/end.png" id="5_su6dr"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_myn7x"]
+texture = ExtResource("4_ui8os")
+texture_region_size = Vector2i(256, 256)
+1:0/0 = 0
+0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(42.6667, -128, 42.6667, 128, -128, 128, -128, -128)
+1:1/0 = 0
+1:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(-128, 42.6667, 128, 42.6667, 128, 128, -128, 128)
+0:1/0 = 0
+0:1/0/physics_layer_0/polygon_0/points = PackedVector2Array(42.6667, -128, 42.6667, 42.6667, 128, 42.6667, 128, 128, -128, 128, -128, -128)
+
+[sub_resource type="TileSet" id="TileSet_d3872"]
+tile_size = Vector2i(256, 256)
+physics_layer_0/collision_layer = 2
+sources/0 = SubResource("TileSetAtlasSource_myn7x")
+
+[node name="Level" type="Node2D"]
+
+[node name="Mouse" type="Node2D" parent="."]
+position = Vector2(2, 81)
+script = ExtResource("1_b7kgq")
+
+[node name="GourtPile" parent="." instance=ExtResource("2_tu5ac")]
+z_index = 2
+y_sort_enabled = false
+position = Vector2(-1, -271)
+
+[node name="Camera2D" parent="GourtPile" instance=ExtResource("3_kc46a")]
+
+[node name="TileMapLayer" type="TileMapLayer" parent="."]
+z_index = -2
+tile_map_data = PackedByteArray("AAD//wAAAAABAAEAAAAAAAAAAAABAAEAAAABAAAAAAABAAEAAAACAAAAAAABAAEAAAD+/wAAAAABAAEAAAD+////AAABAAAAAAD/////AAABAAAAAAAAAP//AAABAAAAAAABAP//AAABAAAAAAACAP//AAABAAAAAAACAP7/AAABAAAAAAABAP7/AAABAAAAAAAAAP7/AAABAAAAAAD///7/AAABAAAAAAD+//7/AAABAAAAAAD+//z/AAABAAAAAAD///z/AAABAAAAAAAAAPz/AAABAAAAAAABAPz/AAABAAAAAAACAPz/AAABAAAAAAACAP3/AAABAAAAAAABAP3/AAABAAAAAAAAAP3/AAABAAAAAAD///3/AAABAAAAAAD+//3/AAABAAAAAAA=")
+tile_set = SubResource("TileSet_d3872")
+
+[node name="End" type="Sprite2D" parent="."]
+position = Vector2(94, -480)
+texture = ExtResource("5_su6dr")

@@ -82,8 +82,10 @@ func nothing():
 	pass
 var do_on_animation_end = nothing
 func on_animation_end():
-	do_on_animation_end.call()
-	do_on_animation_end = nothing
+	var f = do_on_animation_end
+	do_on_animation_end = nothing # guard against infinite recursion
+	f.call()
+	
 	
 func idle(new_idle=false):
 	$Body.idle(new_idle)
@@ -92,7 +94,8 @@ func bottom_behaviour(delta: float) -> void:
 	if not is_on_floor():
 		velocity += get_gravity() * delta
 		$Body.play("restive")
-
+	if Input.is_action_just_pressed("enter_door"):
+		enter_door()
 	var target = Input.get_axis("go_left","go_right") * 200 if input_enabled else 0
 	velocity.x = move_toward(velocity.x, target, 20)
 	if not velocity.x == 0:
@@ -106,7 +109,7 @@ func bottom_behaviour(delta: float) -> void:
 func test_spread(f: float, within: float, of: float) -> bool:
 	return (of - within) < f and f < (of + within)
 	
-func on_nearby_click(where: Vector2):	
+func on_nearby_click(where: Vector2, what: Area2D):
 	if not input_enabled:
 		identify("input disabled (looks like you've reached a code path that was never supposed to be reached)")
 		return
@@ -114,12 +117,29 @@ func on_nearby_click(where: Vector2):
 	if test_spread(angle, 30, 45):
 		return poke_up()
 	if test_spread(angle, 20, 135):
-		return grab_left()
+		return grab_left(what)
 	if test_spread(angle, 30, 225) :
 		return poke_down()
 	if test_spread(angle, 20, 315):
-		return grab_right()
+		return grab_right(what)
+
+func can_enter_door(door: Area2D = null) -> bool:
+	if not door:
+		door = $doorFinder.find_door()
+	if not door:
+		return false
+	return $doorFinder.can_enter_door(door)# and up_neighbour.can_enter_door(door) if up_neighbour else true
+
+func enter_door():
+	var door = $doorFinder.find_door()
+	if not door and down_neighbour:
+		bonk()
+	elif up_neighbour:
+		up_neighbour.enter_door()
+	else:
+		door.enter_door()
 		
+	
 func _physics_process(delta: float) -> void:
 	if down_neighbour == null:
 		bottom_behaviour(delta)
@@ -165,20 +185,30 @@ func poke_down():
 	$Body.play("poke_down")
 	if down_neighbour:
 		down_neighbour.poked()
-func grab():
-	identify("grab")
+func grab(what: Area2D=null):
 	offset_face_for_animation(Vector2(40,0))
 	$Body.play("grab")
-func grab_right():
-	grab()
+	if what:
+		what.interact.emit()
+func bonk():
+	$doorFinder.find_door()
+	wakeup()
+	on_animation_end()
+	$SlappySFX.play()
+	$Body.play("bonk")
+	$Body/Face.play(["sleepless", "harmless", "bounderless", "carless"].pick_random())
+	do_on_animation_end = sleep
+func grab_right(what: Area2D=null):
+	grab(what)
 	set_facing(Direction.RIGHT)
-func grab_left():
-	grab()
+func grab_left(what: Area2D=null):
+	grab(what)
 	set_facing(Direction.LEFT)
 func poked():
 	bump_patience()
 	wakeup()
 	disable_input_for_animation()
+	#$SlappySFX.play()
 	$Body.play_exclusive(["shock_0", "shock_1", "shock_2"].pick_random())
 	$Body.pick_new_idle()
 		

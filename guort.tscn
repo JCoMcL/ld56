@@ -1,7 +1,8 @@
-[gd_scene load_steps=119 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=122 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
+[ext_resource type="Script" path="res://door_finder.gd" id="2_3c4sn"]
 [ext_resource type="Texture2D" uid="uid://7iw5f25abp15" path="res://gourts/bodies/body0010.png" id="2_ji4bc"]
 [ext_resource type="AudioStream" uid="uid://dmikl31oxrbxo" path="res://sound/snore_0.ogg" id="2_lxyxg"]
 [ext_resource type="Texture2D" uid="uid://ds2eyojnihhrm" path="res://gourts/bodies/body0021.png" id="2_urk3u"]
@@ -113,6 +114,12 @@
 [ext_resource type="Texture2D" uid="uid://ovkailsr7bks" path="res://gourts/faces/face0029.png" id="81_nc8ok"]
 [ext_resource type="Script" path="res://socket.gd" id="90_nr5he"]
 [ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="112_io5bt"]
+[ext_resource type="AudioStream" uid="uid://c6u88mcxip422" path="res://sound/slap_0.ogg" id="114_5xv3e"]
+[ext_resource type="AudioStream" uid="uid://b8vkdvfj4x3nv" path="res://sound/slap_1.ogg" id="115_ssa24"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
+radius = 68.9999
+height = 196.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_7rkiu"]
 animations = [{
@@ -129,6 +136,29 @@ animations = [{
 "loop": true,
 "name": &"advantive",
 "speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_mun3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ji4bc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6kvb0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("1_mun3l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_ji4bc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_6kvb0")
+}],
+"loop": false,
+"name": &"bonk",
+"speed": 18.0
 }, {
 "frames": [{
 "duration": 1.0,
@@ -642,19 +672,29 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
-radius = 68.9999
-height = 196.0
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_3e6jw"]
-radius = 172.735
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bvgy6"]
+streams_count = 2
+stream_0/stream = ExtResource("114_5xv3e")
+stream_1/stream = ExtResource("115_ssa24")
 
 [node name="Guort" type="CharacterBody2D"]
 z_index = 1
+collision_layer = 9
 collision_mask = 2
 slide_on_ceiling = false
-platform_floor_layers = 4294967294
+platform_floor_layers = 4294967286
 script = ExtResource("1_mqv0r")
+
+[node name="doorFinder" type="Area2D" parent="."]
+position = Vector2(-6, -19)
+rotation = 1.5708
+collision_layer = 0
+collision_mask = 8
+script = ExtResource("2_3c4sn")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="doorFinder"]
+z_index = 1
+shape = SubResource("CapsuleShape2D_ra35n")
 
 [node name="Patience" type="Timer" parent="."]
 
@@ -666,7 +706,9 @@ script = ExtResource("3_doxa6")
 
 [node name="Body" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_7rkiu")
-animation = &"grab"
+animation = &"bonk"
+frame = 2
+frame_progress = 1.0
 script = ExtResource("26_olj8s")
 idle_animations = Array[StringName]([&"furtive", &"pensive", &"sordive", &"advantive"])
 
@@ -688,7 +730,7 @@ initial_velocity_max = 50.1
 [node name="Face" type="AnimatedSprite2D" parent="Body"]
 position = Vector2(0, 8)
 sprite_frames = SubResource("SpriteFrames_matdj")
-animation = &"harmless"
+animation = &"aimless"
 script = ExtResource("13_esvsc")
 reserved_animations = Array[StringName]([&"sleep"])
 
@@ -705,9 +747,8 @@ speed = 3.9
 
 [node name="ClickDetector" parent="." instance=ExtResource("112_io5bt")]
 
-[node name="CollisionShape2D" parent="ClickDetector" index="0"]
-position = Vector2(-9.5, -2)
-shape = SubResource("CircleShape2D_3e6jw")
+[node name="SlappySFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_bvgy6")
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 

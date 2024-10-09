@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cjknd176i4hwb"]
+[gd_scene load_steps=18 format=4 uid="uid://co0vh8muhsrgj"]
 
 [ext_resource type="Script" path="res://mouse.gd" id="1_f1uwk"]
 [ext_resource type="PackedScene" uid="uid://cxya8sad0of8x" path="res://gourt pile.tscn" id="1_mecn1"]
@@ -7,6 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://6r0f0ewdp005" path="res://environment/boss door.png" id="5_qydu4"]
 [ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="6_1yrpj"]
 [ext_resource type="Texture2D" uid="uid://c6s71fjd5h5sd" path="res://environment/boss door open.png" id="6_tj102"]
+[ext_resource type="Script" path="res://boss_door.gd" id="7_sycng"]
+[ext_resource type="Script" path="res://entrance.gd" id="8_vl2ei"]
+[ext_resource type="PackedScene" uid="uid://bx325uqp3hbas" path="res://end_level.tscn" id="9_cvnjp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_myn7x"]
 texture = ExtResource("4_erbpb")
@@ -49,45 +52,6 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jsixy"]
 size = Vector2(298, 501)
 
-[sub_resource type="Animation" id="Animation_cagkp"]
-resource_name = "open"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [0, 1]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D2:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector2(251, 68), Vector2(-134, 40)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("Entrance/CollisionShape2D:disabled")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
 [sub_resource type="Animation" id="Animation_hm67a"]
 length = 0.001
 tracks/0/type = "value"
@@ -105,7 +69,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("Area2D2:position")
+tracks/1/path = NodePath("ClickDetector:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -125,6 +89,45 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_cagkp"]
+resource_name = "open"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ClickDetector:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(251, 68), Vector2(-134, 40)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Entrance/CollisionShape2D:disabled")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_ljjum"]
@@ -154,15 +157,19 @@ tile_set = SubResource("TileSet_d3872")
 [node name="BossDoor" type="AnimatedSprite2D" parent="TileMapLayer"]
 position = Vector2(970, -131)
 sprite_frames = SubResource("SpriteFrames_x1lcb")
+script = ExtResource("7_sycng")
 
 [node name="Entrance" type="Area2D" parent="TileMapLayer/BossDoor"]
+collision_layer = 8
+script = ExtResource("8_vl2ei")
+whats_on_the_other_side = ExtResource("9_cvnjp")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TileMapLayer/BossDoor/Entrance"]
 position = Vector2(115, 39.5)
 shape = SubResource("RectangleShape2D_jsixy")
 disabled = true
 
-[node name="Area2D2" parent="TileMapLayer/BossDoor" instance=ExtResource("6_1yrpj")]
+[node name="ClickDetector" parent="TileMapLayer/BossDoor" instance=ExtResource("6_1yrpj")]
 position = Vector2(251, 68)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="TileMapLayer/BossDoor"]
