@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c6s71fjd5h5sd" path="res://environment/boss door open.png" id="6_tj102"]
 [ext_resource type="Script" path="res://boss_door.gd" id="7_sycng"]
 [ext_resource type="Script" path="res://entrance.gd" id="8_vl2ei"]
-[ext_resource type="PackedScene" uid="uid://bx325uqp3hbas" path="res://end_level.tscn" id="9_cvnjp"]
+[ext_resource type="PackedScene" uid="uid://cjknd176i4hwb" path="res://end.tscn" id="9_cvnjp"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_myn7x"]
 texture = ExtResource("4_erbpb")
