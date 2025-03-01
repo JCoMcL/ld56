@@ -1,4 +1,4 @@
-[gd_scene load_steps=126 format=3 uid="uid://crtcijpbdoi0y"]
+[gd_scene load_steps=146 format=3 uid="uid://crtcijpbdoi0y"]
 
 [ext_resource type="Script" path="res://guort.gd" id="1_mqv0r"]
 [ext_resource type="Texture2D" uid="uid://dcm24nnmjgnci" path="res://gourts/bodies/body0009.png" id="1_mun3l"]
@@ -117,7 +117,25 @@
 [ext_resource type="PackedScene" uid="uid://d141uny6m7xeo" path="res://click_detector.tscn" id="112_io5bt"]
 [ext_resource type="AudioStream" uid="uid://c6u88mcxip422" path="res://sound/slap_0.ogg" id="114_5xv3e"]
 [ext_resource type="AudioStream" uid="uid://b8vkdvfj4x3nv" path="res://sound/slap_1.ogg" id="115_ssa24"]
+[ext_resource type="AudioStream" uid="uid://b3a2s4oersg1r" path="res://sound/pop_2.ogg" id="116_quh40"]
+[ext_resource type="AudioStream" uid="uid://dg370kf8cgl4q" path="res://sound/shock_0.ogg" id="116_qyei0"]
+[ext_resource type="AudioStream" uid="uid://o5m883fy63xt" path="res://sound/pop_1.ogg" id="117_pr3b6"]
+[ext_resource type="AudioStream" uid="uid://db0wls3l2bk1c" path="res://sound/shock_2.ogg" id="117_t1xfv"]
+[ext_resource type="AudioStream" uid="uid://rwj0ka52xiog" path="res://sound/shock_3.ogg" id="118_c31ck"]
+[ext_resource type="AudioStream" uid="uid://5jkviuhherg5" path="res://sound/slap_4.ogg" id="118_fa4oq"]
+[ext_resource type="AudioStream" uid="uid://cnsmtrdo2148p" path="res://sound/pop_3.ogg" id="118_jwjrd"]
+[ext_resource type="AudioStream" uid="uid://cl7104pyu28sd" path="res://sound/pop_4.ogg" id="119_2qnbj"]
+[ext_resource type="AudioStream" uid="uid://fm6ind2h42bi" path="res://sound/shock_4.ogg" id="119_ukd15"]
+[ext_resource type="AudioStream" uid="uid://dulu1ewr31yo5" path="res://sound/shock_5.ogg" id="120_astes"]
+[ext_resource type="AudioStream" uid="uid://dpnjuivighnqi" path="res://sound/slap_6.ogg" id="120_fn37n"]
 [ext_resource type="AudioStream" uid="uid://ba455qmdrjk3c" path="res://sound/slap_5.ogg" id="121_jgije"]
+[ext_resource type="AudioStream" uid="uid://c6rcy8onupmal" path="res://sound/shock_6.ogg" id="121_udako"]
+[ext_resource type="AudioStream" uid="uid://db0q62qbreci1" path="res://sound/shock_7.ogg" id="122_r2tb6"]
+[ext_resource type="AudioStream" uid="uid://bktuece6tco8h" path="res://sound/shock_8.ogg" id="123_swich"]
+[ext_resource type="AudioStream" uid="uid://d3rbqf6ebavke" path="res://sound/pop_5.ogg" id="125_xprij"]
+[ext_resource type="AudioStream" uid="uid://keklms17s251" path="res://sound/pop_6.ogg" id="126_mt217"]
+[ext_resource type="AudioStream" uid="uid://b00qs84gnl675" path="res://sound/pop_7.ogg" id="127_qvaec"]
+[ext_resource type="AudioStream" uid="uid://c6o7j3q367iky" path="res://sound/pop_8.ogg" id="128_ixm72"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ra35n"]
 radius = 68.9999
@@ -682,13 +700,47 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bvgy6"]
-random_pitch = 1.71
-random_volume_offset_db = 1.05
-streams_count = 3
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_5g74j"]
+resource_local_to_scene = true
+resource_name = "slap_sounds"
+random_pitch = 1.33
+random_volume_offset_db = 1.0
+streams_count = 5
 stream_0/stream = ExtResource("114_5xv3e")
 stream_1/stream = ExtResource("115_ssa24")
-stream_2/stream = ExtResource("121_jgije")
+stream_2/stream = ExtResource("118_fa4oq")
+stream_3/stream = ExtResource("121_jgije")
+stream_4/stream = ExtResource("120_fn37n")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_pj78b"]
+resource_local_to_scene = true
+resource_name = "pop_sounds"
+random_pitch = 1.5
+random_volume_offset_db = 2.0
+streams_count = 8
+stream_0/stream = ExtResource("116_quh40")
+stream_1/stream = ExtResource("117_pr3b6")
+stream_2/stream = ExtResource("118_jwjrd")
+stream_3/stream = ExtResource("119_2qnbj")
+stream_4/stream = ExtResource("125_xprij")
+stream_5/stream = ExtResource("126_mt217")
+stream_6/stream = ExtResource("127_qvaec")
+stream_7/stream = ExtResource("128_ixm72")
+
+[sub_resource type="AudioStreamRandomizer" id="AudioStreamRandomizer_bvgy6"]
+resource_local_to_scene = true
+resource_name = "shock_sounds"
+random_pitch = 1.1
+random_volume_offset_db = 5.05
+streams_count = 8
+stream_0/stream = ExtResource("116_qyei0")
+stream_1/stream = ExtResource("117_t1xfv")
+stream_2/stream = ExtResource("118_c31ck")
+stream_3/stream = ExtResource("119_ukd15")
+stream_4/stream = ExtResource("120_astes")
+stream_5/stream = ExtResource("121_udako")
+stream_6/stream = ExtResource("122_r2tb6")
+stream_7/stream = ExtResource("123_swich")
 
 [node name="Guort" type="CharacterBody2D"]
 z_index = 1
@@ -785,7 +837,14 @@ speed = 3.9
 [node name="ClickDetector" parent="." instance=ExtResource("112_io5bt")]
 
 [node name="SlappySFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_5g74j")
+
+[node name="PopSFX" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource("AudioStreamRandomizer_pj78b")
+
+[node name="ShockSFX" type="AudioStreamPlayer2D" parent="."]
 stream = SubResource("AudioStreamRandomizer_bvgy6")
+pitch_scale = 1.23
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 

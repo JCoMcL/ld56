@@ -112,15 +112,17 @@ func on_nearby_click(where: Vector2, what: Area2D):
 	if not input_enabled:
 		identify("input disabled (looks like you've reached a code path that was never supposed to be reached)")
 		return
-	var angle = rad_to_deg(where.angle()) + 135
-	if test_spread(angle, 30, 45):
+	var angle = rad_to_deg(where.angle()) + 155
+	print(angle)
+	if test_spread(angle, 30, 65):
 		return poke_up()
-	if test_spread(angle, 20, 135):
-		return grab_left(what)
-	if test_spread(angle, 30, 225) :
-		return poke_down()
-	if test_spread(angle, 20, 315):
+	if test_spread(angle, 20, 155):
 		return grab_right(what)
+	if test_spread(angle, 30, 245) :
+		return poke_down()
+	if test_spread(angle, 20, 340):
+		return grab_left(what)
+		
 
 func can_enter_door(door: Area2D):
 	if not door.can_enter(self):
@@ -176,17 +178,20 @@ func wakeup():
 	$Body/SleepyParticles.emitting  = false
 	$SleepySFX.stop()
 func poke_up():
+	$PopSFX.play()
 	offset_face_for_animation(Vector2(20,-20))
 	$Body.play("poke_up")
 	if up_neighbour:
 		up_neighbour.poked()
 func poke_down():
+	$PopSFX.play()
 	offset_face_for_animation(Vector2(-20,20))
 	$Body.play("poke_down")
 	if down_neighbour:
 		down_neighbour.poked()
 func grab(what: Area2D=null):
 	offset_face_for_animation(Vector2(40,0))
+	$PopSFX.play()
 	$Body.play("grab")
 	if what:
 		what.interact.emit()
@@ -210,7 +215,7 @@ func poked():
 	bump_patience()
 	wakeup()
 	disable_input_for_animation()
-	#$SlappySFX.play()
+	$ShockSFX.play()
 	$Body.play_exclusive(["shock_0", "shock_1", "shock_2"].pick_random())
 	$Body.pick_new_idle()
 		

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b8vglbhnihlwn"
-path="res://.godot/imported/*.png-b5ed7232eb1e69293b57868ad5d3fa68.ctex"
+uid="uid://cbtjb5yx34wcg"
+path="res://.godot/imported/KritaTempPalettegen_000001.png-e1630de4c491773a84fefee93000b453.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://*.png"
-dest_files=["res://.godot/imported/*.png-b5ed7232eb1e69293b57868ad5d3fa68.ctex"]
+source_file="res://KritaTempPalettegen_000001.png"
+dest_files=["res://.godot/imported/KritaTempPalettegen_000001.png-e1630de4c491773a84fefee93000b453.ctex"]
 
 [params]
 

@@ -41,8 +41,8 @@ func _physics_process(delta: float) -> void:
 	if target:
 		target_pos = target.global_position
 	adjust_zoom()
-	if position.y > limit_bottom * 2:
-		get_tree().current_scene.restart()
+	if position.y > limit_bottom:
+		get_tree().current_scene.restart_game()
 		
 	# Calculate mouse influence
 	var mouse_pos = get_viewport().get_mouse_position()
