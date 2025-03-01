@@ -2,7 +2,6 @@
 .godot/
 /android/
 export/*/*
-*.kra
 *.kra~
 export/*.zip
 *~
